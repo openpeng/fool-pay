@@ -70,7 +70,7 @@ func (nc *NotifyClient) GetNotifyData(b []byte) notify.NotifyProcessData {
 	}
 	endTime, _ := time.Parse("2006-01-02 15:04:05", notifyMapData.NotifyTime)
 	return notify.NotifyProcessData{
-		Amount:      float64(notifyMapData.TotalFee / 100),
+		Amount:      float64(notifyMapData.TotalFee) / 100,
 		Attach:      notifyMapData.PassbackParams,
 		OrderNo:     notifyMapData.TradeNo,
 		PayTime:     endTime.Unix() - 8*3600, //当前时间要减8小时

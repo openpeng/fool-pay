@@ -15,9 +15,9 @@ func NewWechatNotify(config common.BaseConfig) *WechatNotify {
 }
 
 func (wn *WechatNotify) BuildResData() string {
-	return "ok"
+	return "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>"
 }
 
 func (wpc *WechatNotify) BuildData() string {
-	return "ok"
+	return "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>"
 }

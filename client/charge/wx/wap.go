@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -39,7 +40,7 @@ func (wpc *WxWapCharge) BuildData() string {
 		TimeExpire:     time.Unix(wcr.TimeoutExpress, 0).Format("20060102150405"),
 		Openid:         wcr.Openid,
 		TotalFee:       fmt.Sprintf("%.0f", wcr.Amount*100),
-		TradeType:      "JSAPI",
+		TradeType:      "MWEB",
 		SpbillCreateIp: wcr.ClientIp,
 		TimeStart:      time.Now().Format("20060102150405"),
 		NonceStr:       util.RandomStr(),
@@ -56,4 +57,26 @@ func (wpc *WxWapCharge) BuildData() string {
 	}
 	xmlStr := fmt.Sprintf("<xml>%s</xml>", buf.String())
 	return xmlStr
+}
+
+func (pc *WxWapCharge) BuildResData() interface{} {
+	var resPar = data.ResCharge{
+		AppID:     pc.WeChatReResult.AppID,
+		TimeStamp: strconv.FormatInt(time.Now().Unix(), 10),
+		NonceStr:  pc.WeChatReResult.NonceStr,
+		Package:   "prepay_id=" + pc.WeChatReResult.PrepayID,
+		SignType:  pc.GetSignType(),
+		Sign:      "",
+		MwebUrl:   pc.WeChatReResult.MwebURL,
+	}
+	var allParams = map[string]string{
+		"appId":     resPar.AppID,
+		"timeStamp": resPar.TimeStamp,
+		"nonceStr":  resPar.NonceStr,
+		"package":   resPar.Package,
+		"signType":  resPar.SignType,
+		"mwebUrl":   resPar.MwebUrl,
+	}
+	resPar.Sign, _ = pc.GetSign(allParams)
+	return resPar
 }

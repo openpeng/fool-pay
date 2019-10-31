@@ -17,6 +17,7 @@ type WeChatReResult struct {
 	TradeType string `json:"trade_type" form:"trade_type"  xml:"trade_type"`
 	PrepayID  string `json:"prepay_id" form:"prepay_id"  xml:"prepay_id"`
 	CodeURL   string `json:"code_url" form:"code_url"  xml:"code_url"`
+	MwebURL   string `json:"mweb_url" form:"mweb_url"  xml:"mweb_url"`
 }
 
 // WechatBaseResult 基本信息
@@ -74,6 +75,7 @@ type ResCharge struct {
 	Package   string
 	SignType  string
 	Sign      string
+	MwebUrl   string
 }
 
 type ResAppCharge struct {

@@ -11,6 +11,7 @@ import (
 var supportChannel = []constant.PayChannel{
 	constant.WX_CHANNEL_PUB,
 	constant.WX_CHANNEL_APP,
+	constant.WX_CHANNEL_WAP,
 	constant.WX_CHANNEL_LITE,
 	constant.WX_CHANNEL_QR,
 	constant.ALI_CHANNEL_WAP,
@@ -44,6 +45,9 @@ func getHandle(channel constant.PayChannel, config common.BaseConfig) common.Cha
 		fallthrough
 	case constant.WX_CHANNEL_LITE:
 		handle = wxCharge.NewWxPubCharge(config)
+		break
+	case constant.WX_CHANNEL_WAP:
+		handle = wxCharge.NewWxWapCharge(config)
 		break
 	case constant.WX_CHANNEL_APP:
 		handle = wxCharge.NewWxAppCharge(config)
